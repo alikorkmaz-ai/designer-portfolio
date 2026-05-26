@@ -552,6 +552,14 @@ button:hover,
   text-transform: uppercase;
 }
 
+.site-footer a {
+  transition: color 180ms var(--ease);
+}
+
+.site-footer a:hover {
+  color: var(--ink);
+}
+
 dialog {
   width: min(1180px, calc(100vw - 28px));
   border: 0;
