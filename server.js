@@ -172,7 +172,10 @@ async function writeSite(site) {
 
 async function connectDatabase() {
   if (siteCollection) return;
-  mongoClient = new MongoClient(MONGODB_URI);
+  mongoClient = new MongoClient(MONGODB_URI, {
+    connectTimeoutMS: 10_000,
+    serverSelectionTimeoutMS: 10_000
+  });
   await mongoClient.connect();
   siteCollection = mongoClient.db(MONGODB_DB).collection("site");
 }

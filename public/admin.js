@@ -76,6 +76,8 @@ function fillProfileForm() {
 
 async function saveProfile(event) {
   event.preventDefault();
+  const submitButton = event.submitter;
+  setBusy(submitButton, true);
   const form = new FormData(profileForm);
   const profile = {
     name: form.get("name"),
@@ -97,8 +99,16 @@ async function saveProfile(event) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ profile, translation })
   });
-  if (response.status === 401) return showLoginExpired();
+  if (response.status === 401) {
+    setBusy(submitButton, false);
+    return showLoginExpired();
+  }
+  if (!response.ok) {
+    setBusy(submitButton, false);
+    return showError(response, "Profil kaydedilemedi.");
+  }
   site = await response.json();
+  setBusy(submitButton, false);
   alert("Profile saved.");
 }
 
@@ -143,6 +153,8 @@ async function uploadImage(file) {
 
 async function saveProject(event) {
   event.preventDefault();
+  const submitButton = event.submitter;
+  setBusy(submitButton, true);
   const data = formProjectData();
   const url = editingId ? `/api/projects/${editingId}` : "/api/projects";
   const method = editingId ? "PUT" : "POST";
@@ -151,9 +163,18 @@ async function saveProject(event) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   });
-  if (response.status === 401) return showLoginExpired();
+  if (response.status === 401) {
+    setBusy(submitButton, false);
+    return showLoginExpired();
+  }
+  if (!response.ok) {
+    setBusy(submitButton, false);
+    return showError(response, "Proje kaydedilemedi.");
+  }
   await refreshSite();
   clearProjectForm();
+  setBusy(submitButton, false);
+  alert("Project saved.");
 }
 
 function formProjectData() {
@@ -303,6 +324,26 @@ function readFile(file) {
 function showLoginExpired() {
   alert("Oturum süresi doldu. Tekrar giriş yap.");
   location.reload();
+}
+
+async function showError(response, fallbackMessage) {
+  let detail = "";
+  try {
+    const body = await response.json();
+    detail = body.error ? `\n${body.error}` : "";
+  } catch {
+    detail = "";
+  }
+  alert(`${fallbackMessage}${detail}`);
+}
+
+function setBusy(button, busy) {
+  if (!button) return;
+  if (busy) {
+    button.dataset.label = button.textContent;
+  }
+  button.disabled = busy;
+  button.textContent = busy ? "Saving..." : button.dataset.label || button.textContent;
 }
 
 function escapeHtml(value) {
