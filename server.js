@@ -134,7 +134,7 @@ const server = http.createServer(async (req, res) => {
       return sendJson(res, 401, { error: "Unauthorized" });
     }
     console.error(error);
-    return sendJson(res, 500, { error: "Server error" });
+    return sendJson(res, error.statusCode || 500, { error: publicErrorMessage(error) });
   }
 });
 
@@ -164,7 +164,12 @@ async function readSite() {
 async function writeSite(site) {
   if (MONGODB_URI) {
     await connectDatabase();
-    await siteCollection.updateOne({ _id: SITE_DOC_ID }, { $set: site }, { upsert: true });
+    try {
+      await siteCollection.updateOne({ _id: SITE_DOC_ID }, { $set: site }, { upsert: true });
+    } catch (error) {
+      resetDatabaseConnection();
+      throw error;
+    }
     return;
   }
   await fs.writeFile(DATA_FILE, `${JSON.stringify(site, null, 2)}\n`);
@@ -174,10 +179,24 @@ async function connectDatabase() {
   if (siteCollection) return;
   mongoClient = new MongoClient(MONGODB_URI, {
     connectTimeoutMS: 10_000,
-    serverSelectionTimeoutMS: 10_000
+    serverSelectionTimeoutMS: 10_000,
+    socketTimeoutMS: 10_000
   });
-  await mongoClient.connect();
-  siteCollection = mongoClient.db(MONGODB_DB).collection("site");
+  try {
+    await mongoClient.connect();
+    siteCollection = mongoClient.db(MONGODB_DB).collection("site");
+  } catch (error) {
+    resetDatabaseConnection();
+    throw error;
+  }
+}
+
+function resetDatabaseConnection() {
+  siteCollection = null;
+  if (mongoClient) {
+    mongoClient.close().catch(() => {});
+    mongoClient = null;
+  }
 }
 
 function sanitizeProfile(profile) {
@@ -296,6 +315,19 @@ function cloudinaryConfigured() {
     && process.env.CLOUDINARY_API_KEY
     && process.env.CLOUDINARY_API_SECRET
   );
+}
+
+function publicErrorMessage(error) {
+  if (error.name === "MongoServerSelectionError" || error.name === "MongoNetworkTimeoutError") {
+    return "Database connection failed. Check MongoDB Network Access and MONGODB_URI.";
+  }
+  if (error.message && /querySrv|ENOTFOUND|ECONN|timed out|Server selection timed out/i.test(error.message)) {
+    return "Database connection failed. Check MongoDB Network Access and MONGODB_URI.";
+  }
+  if (error.statusCode === 502) {
+    return error.message;
+  }
+  return "Server error";
 }
 
 function requireAdmin(req) {
