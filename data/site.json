@@ -1,0 +1,97 @@
+{
+  "profile": {
+    "name": "Sinem Başaran",
+    "role": "Yaratıcı Grafik Tasarımcı & Görsel Hikaye Anlatıcısı",
+    "location": "Ankara",
+    "intro": "Fikirleri Görsel Hikayelere, Tasarımı Deneyime Dönüştürüyorum.",
+    "about": "Sinem; kültür, yaşam stili ve bağımsız markalar için güçlü tipografi, net hiyerarşi ve dokunsal renk hikayelerine dayanan görsel sistemler tasarlar.",
+    "email": "hello@example.com",
+    "instagram": "https://instagram.com/",
+    "linkedin": "https://linkedin.com/"
+  },
+  "translations": {
+    "en": {
+      "profile": {
+        "role": "Creative Graphic Designer & Visual Storyteller",
+        "intro": "I turn ideas into visual stories and design into experience.",
+        "about": "Sinem creates visual systems for culture, lifestyle and independent brands. The work focuses on strong typography, clear hierarchy and tactile color stories."
+      },
+      "projects": {
+        "identity-atelier": {
+          "title": "Atelier Identity",
+          "category": "Brand Identity",
+          "summary": "A refined identity system for a boutique creative workspace.",
+          "description": "Logo system, typography palette, brand applications and a flexible social media direction designed for a calm but memorable visual presence."
+        },
+        "poster-series": {
+          "title": "Poster Series",
+          "category": "Poster Design",
+          "summary": "A high-contrast poster system for a music and talks program.",
+          "description": "A modular poster approach built around expressive typography, image framing and production-friendly color combinations."
+        },
+        "digital-campaign": {
+          "title": "Digital Campaign",
+          "category": "Campaign",
+          "summary": "Launch visuals for a small product campaign across digital surfaces.",
+          "description": "Art direction, social templates, display assets and campaign key visuals designed for quick iteration."
+        }
+      }
+    }
+  },
+  "projects": [
+    {
+      "id": "identity-atelier",
+      "title": "Atölye Kimliği",
+      "category": "Marka Kimliği",
+      "year": "2026",
+      "client": "Atelier",
+      "summary": "Butik bir yaratıcı çalışma alanı için rafine bir kimlik sistemi.",
+      "description": "Sakin ama akılda kalıcı bir görsel varlık için logo sistemi, tipografi paleti, marka uygulamaları ve esnek sosyal medya dili.",
+      "cover": "/assets/sample-identity.svg",
+      "gallery": [
+        "/assets/sample-identity.svg",
+        "/assets/sample-poster.svg",
+        "/assets/sample-campaign.svg"
+      ],
+      "featured": true,
+      "published": true,
+      "order": 1
+    },
+    {
+      "id": "poster-series",
+      "title": "Afiş Serisi",
+      "category": "Afiş Tasarımı",
+      "year": "2026",
+      "client": "Cultural Program",
+      "summary": "Müzik ve söyleşi programı için yüksek kontrastlı afiş sistemi.",
+      "description": "İfade gücü yüksek tipografi, görsel kadrajlama ve üretime uygun renk kombinasyonları üzerine kurulan modüler afiş yaklaşımı.",
+      "cover": "/assets/sample-poster.svg",
+      "gallery": [
+        "/assets/sample-poster.svg",
+        "/assets/sample-campaign.svg",
+        "/assets/sample-identity.svg"
+      ],
+      "featured": true,
+      "published": true,
+      "order": 3
+    },
+    {
+      "id": "digital-campaign",
+      "title": "Dijital Kampanya",
+      "category": "Kampanya",
+      "year": "2025",
+      "client": "Independent Brand",
+      "summary": "Dijital yüzeylerde çalışan küçük ölçekli ürün lansmanı görselleri.",
+      "description": "Hızlı iterasyon için tasarlanan sanat yönetimi, sosyal medya şablonları, display varlıkları ve kampanya ana görselleri.",
+      "cover": "/assets/sample-campaign.svg",
+      "gallery": [
+        "/assets/sample-campaign.svg",
+        "/assets/sample-identity.svg",
+        "/assets/sample-poster.svg"
+      ],
+      "featured": false,
+      "published": true,
+      "order": 2
+    }
+  ]
+}

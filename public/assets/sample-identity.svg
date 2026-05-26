@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <rect width="1200" height="900" fill="#f4efe6"/>
+  <rect x="92" y="92" width="1016" height="716" fill="#151515"/>
+  <circle cx="360" cy="450" r="186" fill="#ff4d2e"/>
+  <rect x="565" y="235" width="330" height="430" fill="#f7d64a"/>
+  <path d="M655 322h150v256H655z" fill="#f4efe6"/>
+  <text x="105" y="845" font-family="Arial, sans-serif" font-size="46" fill="#151515">ATELIER IDENTITY</text>
+</svg>

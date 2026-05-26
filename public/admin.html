@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio Admin</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="admin-body">
+  <main class="admin-shell">
+    <section class="login-panel" id="loginPanel">
+      <h1>Portfolio Admin</h1>
+      <p>Projeleri, iletişim bilgisini ve site metinlerini buradan güncelle.</p>
+      <form id="loginForm">
+        <label>Admin password
+          <input type="password" name="password" autocomplete="current-password" required>
+        </label>
+        <button type="submit">Sign in</button>
+      </form>
+      <p class="small-note">Varsayılan şifre: <code>portfolio2026</code></p>
+    </section>
+
+    <section class="admin-app hidden" id="adminApp">
+      <div class="admin-top">
+        <div>
+          <h1>Content Manager</h1>
+          <p>Site açıkken değişiklikler JSON dosyasına kaydedilir.</p>
+        </div>
+        <div class="admin-actions">
+          <a class="secondary-button" href="/" target="_blank">View site</a>
+          <button class="secondary-button" id="logoutButton" type="button">Logout</button>
+        </div>
+      </div>
+
+      <div class="admin-grid">
+        <form class="editor-card" id="profileForm">
+          <h2>Profile</h2>
+          <h3>Türkçe içerik</h3>
+          <label>Name <input name="name" required></label>
+          <label>Role <input name="role"></label>
+          <label>Location <input name="location"></label>
+          <label>Intro <textarea name="intro" rows="3"></textarea></label>
+          <label>About <textarea name="about" rows="5"></textarea></label>
+          <label>Email <input name="email" type="email"></label>
+          <label>Instagram <input name="instagram"></label>
+          <label>LinkedIn <input name="linkedin"></label>
+          <h3>English content</h3>
+          <label>Role EN <input name="en_role"></label>
+          <label>Intro EN <textarea name="en_intro" rows="3"></textarea></label>
+          <label>About EN <textarea name="en_about" rows="5"></textarea></label>
+          <button type="submit">Save profile</button>
+        </form>
+
+        <form class="editor-card" id="projectForm">
+          <h2 id="projectFormTitle">New Project</h2>
+          <input type="hidden" name="id">
+          <input type="hidden" name="cover">
+          <input type="hidden" name="gallery">
+          <h3>Türkçe içerik</h3>
+          <label>Title <input name="title" required></label>
+          <label>Category <input name="category"></label>
+          <label>Year <input name="year"></label>
+          <label>Client <input name="client"></label>
+          <label>Summary <textarea name="summary" rows="3"></textarea></label>
+          <label>Description <textarea name="description" rows="5"></textarea></label>
+          <h3>English content</h3>
+          <label>Title EN <input name="en_title"></label>
+          <label>Category EN <input name="en_category"></label>
+          <label>Summary EN <textarea name="en_summary" rows="3"></textarea></label>
+          <label>Description EN <textarea name="en_description" rows="5"></textarea></label>
+          <h3>Settings</h3>
+          <label>Order <input name="order" type="number" value="100"></label>
+          <label class="checkbox-line"><input name="featured" type="checkbox"> Featured</label>
+          <label class="checkbox-line"><input name="published" type="checkbox" checked> Published</label>
+          <label>Cover image <input id="coverInput" type="file" accept="image/*"></label>
+          <img class="cover-preview hidden" id="coverPreview" alt="">
+          <label>Project gallery <input id="galleryInput" type="file" accept="image/*" multiple></label>
+          <div class="gallery-preview" id="galleryPreview"></div>
+          <div class="form-row">
+            <button type="submit">Save project</button>
+            <button class="secondary-button" id="newProjectButton" type="button">Clear</button>
+          </div>
+        </form>
+      </div>
+
+      <section class="project-list">
+        <h2>Projects</h2>
+        <div id="adminProjects"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/admin.js"></script>
+</body>
+</html>

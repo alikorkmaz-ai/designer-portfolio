@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <rect width="1200" height="900" fill="#22273d"/>
+  <rect x="88" y="92" width="1024" height="716" fill="#e9e7e2"/>
+  <text x="135" y="290" font-family="Arial Black, Arial, sans-serif" font-size="132" fill="#22273d">TYPE</text>
+  <text x="135" y="438" font-family="Arial Black, Arial, sans-serif" font-size="132" fill="#ff4d2e">NOISE</text>
+  <text x="135" y="586" font-family="Arial Black, Arial, sans-serif" font-size="132" fill="#22273d">GRID</text>
+  <circle cx="910" cy="650" r="118" fill="#24755c"/>
+  <text x="135" y="728" font-family="Arial, sans-serif" font-size="34" fill="#6f6a62">POSTER SYSTEM / CULTURE</text>
+</svg>

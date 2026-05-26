@@ -1,0 +1,14 @@
+{
+  "name": "designer-portfolio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.16.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
