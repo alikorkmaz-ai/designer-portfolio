@@ -13,7 +13,7 @@ const DATA_FILE = path.join(ROOT, "data", "site.json");
 const UPLOAD_DIR = path.join(PUBLIC_DIR, "uploads");
 const HOST = process.env.RENDER ? "0.0.0.0" : (process.env.HOST || "0.0.0.0");
 const PORT = Number(process.env.PORT || 8787);
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "portfolio2026";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || crypto.randomBytes(24).toString("hex");
 const MONGODB_URI = process.env.MONGODB_URI || "";
 const MONGODB_DB = process.env.MONGODB_DB || "designer_portfolio";
 const SITE_DOC_ID = "site";
@@ -39,6 +39,10 @@ const server = http.createServer(async (req, res) => {
 
     if (url.pathname === "/api/site" && req.method === "GET") {
       return sendJson(res, 200, await readSite());
+    }
+
+    if (url.pathname === "/admin" && req.method === "GET") {
+      return serveStatic("/admin.html", res);
     }
 
     if (url.pathname === "/api/login" && req.method === "POST") {
