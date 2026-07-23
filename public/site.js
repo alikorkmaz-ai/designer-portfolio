@@ -153,14 +153,12 @@ function renderProjects(projects) {
   document.getElementById("projectGrid").innerHTML = visible
     .map((project, index) => projectCard(project, index))
     .join("");
-  document.querySelectorAll("[data-project]").forEach((card) => {
-    card.addEventListener("click", () => openProject(card.dataset.project));
-  });
+  document.querySelectorAll(".project-card[data-project]").forEach(bindProjectCard);
 }
 
 function projectCard(project, index) {
   return `
-    <article class="project-card reveal ${index % 5 === 0 ? "wide" : ""}" data-project="${project.id}" style="--delay: ${Math.min(index * 45, 220)}ms">
+    <article class="project-card reveal ${index % 5 === 0 ? "wide" : ""}" data-project="${project.id}" role="button" tabindex="0" aria-label="${escapeHtml(t("open"))}: ${escapeHtml(project.title)}" style="--delay: ${Math.min(index * 45, 220)}ms">
       <div class="project-image">
         <img src="${project.cover}" alt="${escapeHtml(project.title)}">
         <span>${t("open")}</span>
@@ -172,6 +170,15 @@ function projectCard(project, index) {
       </div>
     </article>
   `;
+}
+
+function bindProjectCard(card) {
+  card.addEventListener("click", () => openProject(card.dataset.project));
+  card.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    event.preventDefault();
+    openProject(card.dataset.project);
+  });
 }
 
 function openProject(id) {

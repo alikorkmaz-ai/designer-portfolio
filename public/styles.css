@@ -431,6 +431,11 @@ button:hover,
   box-shadow: var(--shadow);
 }
 
+.project-card:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 4px;
+}
+
 .project-card.wide {
   grid-column: span 2;
 }
