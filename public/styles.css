@@ -154,10 +154,12 @@ h1 {
 
 .intro-title {
   max-width: 1080px;
-  font-size: clamp(48px, 8.2vw, 124px);
-  line-height: 0.94;
+  font-size: clamp(40px, 7vw, 104px);
+  line-height: 1;
   text-transform: none;
-  overflow-wrap: anywhere;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
 }
 
 h2 {
@@ -195,6 +197,9 @@ h3 {
 .profile-panel span,
 .profile-panel strong {
   display: block;
+  overflow-wrap: normal;
+  word-break: keep-all;
+  hyphens: none;
 }
 
 .studio-strip {
@@ -966,7 +971,7 @@ textarea {
   }
 
   h1 {
-    font-size: clamp(48px, 17vw, 84px);
+    font-size: clamp(40px, 13vw, 72px);
   }
 
   .section-title,
