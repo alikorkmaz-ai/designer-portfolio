@@ -154,6 +154,7 @@ function renderProjects(projects) {
     .map((project, index) => projectCard(project, index))
     .join("");
   document.querySelectorAll(".project-card[data-project]").forEach(bindProjectCard);
+  observeRevealItems();
 }
 
 function projectCard(project, index) {
