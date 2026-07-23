@@ -260,6 +260,7 @@ h3 {
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  border-radius: 0;
   transition: transform 260ms var(--ease), box-shadow 260ms var(--ease);
 }
 
@@ -290,7 +291,7 @@ h3 {
   z-index: 1;
   background: var(--accent);
   color: #fff;
-  border-radius: 999px;
+  border-radius: 0;
   padding: 8px 12px;
   font-size: 12px;
   font-weight: 780;
@@ -304,7 +305,7 @@ h3 {
   top: 18px;
   z-index: 1;
   border: 1px solid rgba(17,17,17,0.2);
-  border-radius: 999px;
+  border-radius: 0;
   padding: 8px 12px;
   background: var(--panel-strong);
   color: var(--ink);
