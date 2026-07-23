@@ -86,7 +86,7 @@ function renderProfile(profile) {
   document.getElementById("role").textContent = `${profile.role} · ${profile.location}`;
   document.getElementById("intro").textContent = profile.intro;
   document.getElementById("location").textContent = profile.location;
-  document.getElementById("aboutText").textContent = profile.about;
+  document.getElementById("aboutText").innerHTML = renderAboutText(profile.about);
   document.getElementById("emailLink").href = `mailto:${profile.email}`;
   document.getElementById("emailLink").textContent = profile.email || t("email");
   document.getElementById("instagramLink").href = profile.instagram;
@@ -315,4 +315,23 @@ function escapeHtml(value) {
     '"': "&quot;",
     "'": "&#039;"
   })[char]);
+}
+
+function renderAboutText(value) {
+  const blocks = String(value || "")
+    .split(/\n{2,}/)
+    .map((block) => block.trim())
+    .filter(Boolean);
+  if (!blocks.length) return "";
+  return blocks.map((block) => {
+    if (/^#{2,3}\s+/.test(block)) {
+      return `<h3>${renderInlineFormatting(block.replace(/^#{2,3}\s+/, ""))}</h3>`;
+    }
+    const lines = block.split(/\n/).map(renderInlineFormatting);
+    return `<p>${lines.join("<br>")}</p>`;
+  }).join("");
+}
+
+function renderInlineFormatting(value) {
+  return escapeHtml(value).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 }

@@ -525,13 +525,36 @@ button:hover,
   line-height: 1;
 }
 
-.about > p {
+.about-copy {
   margin: 0;
   color: var(--ink);
   font-size: clamp(18px, 2vw, 30px);
   line-height: 1.28;
   max-width: 760px;
   text-wrap: balance;
+}
+
+.about-copy p,
+.about-copy h3 {
+  margin: 0;
+}
+
+.about-copy p + p,
+.about-copy p + h3,
+.about-copy h3 + p {
+  margin-top: 16px;
+}
+
+.about-copy h3 {
+  color: var(--accent);
+  font-size: clamp(15px, 1.4vw, 20px);
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.about-copy strong {
+  color: var(--ink);
+  font-weight: 860;
 }
 
 .contact {
