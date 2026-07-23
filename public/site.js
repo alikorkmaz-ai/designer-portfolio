@@ -1,9 +1,6 @@
 let siteData = null;
 let currentLocale = localStorage.getItem("portfolio_locale") || "tr";
 let currentFilter = "__all__";
-let activeGallery = [];
-let activeGalleryIndex = 0;
-let activeProject = null;
 
 const dialog = document.getElementById("projectDialog");
 const LABELS = {
@@ -28,7 +25,8 @@ const LABELS = {
     categories: "kategori",
     projects: "proje",
     selected: "Seçili",
-    email: "E-posta"
+    email: "E-posta",
+    related: "Diğer işler"
   },
   en: {
     navWork: "Work",
@@ -51,14 +49,12 @@ const LABELS = {
     categories: "categories",
     projects: "projects",
     selected: "Selected",
-    email: "Email"
+    email: "Email",
+    related: "More work"
   }
 };
 
 document.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
-document.querySelector(".gallery-prev").addEventListener("click", () => moveGallery(-1));
-document.querySelector(".gallery-next").addEventListener("click", () => moveGallery(1));
-document.addEventListener("keydown", handleGalleryKeys);
 document.querySelectorAll("[data-locale]").forEach((button) => {
   button.addEventListener("click", () => setLocale(button.dataset.locale));
 });
@@ -182,14 +178,15 @@ function openProject(id) {
   const sourceProject = siteData.projects.find((item) => item.id === id);
   const project = sourceProject ? localizedProject(sourceProject) : null;
   if (!project) return;
-  activeProject = project;
-  activeGallery = projectGallery(project);
-  activeGalleryIndex = 0;
-  renderDialogImage(project);
   document.getElementById("dialogMeta").textContent = `${project.category} · ${project.client} · ${project.year}`;
   document.getElementById("dialogTitle").textContent = project.title;
   document.getElementById("dialogDescription").textContent = project.description;
-  dialog.showModal();
+  renderProjectDetailMedia(project);
+  renderRelatedProjects(project.id);
+  if (!dialog.open) {
+    dialog.showModal();
+  }
+  dialog.scrollTop = 0;
 }
 
 function setLocale(locale) {
@@ -247,35 +244,33 @@ function projectGallery(project) {
   return gallery.length ? gallery : [project.cover];
 }
 
-function moveGallery(direction) {
-  if (activeGallery.length < 2) return;
-  activeGalleryIndex = (activeGalleryIndex + direction + activeGallery.length) % activeGallery.length;
-  renderDialogImage(activeProject || {});
+function renderProjectDetailMedia(project) {
+  document.getElementById("dialogMedia").innerHTML = projectGallery(project)
+    .map((src, index) => `
+      <figure class="project-detail-frame">
+        <img src="${src}" alt="${escapeHtml(project.title)} ${index + 1}" loading="${index === 0 ? "eager" : "lazy"}">
+      </figure>
+    `)
+    .join("");
 }
 
-function handleGalleryKeys(event) {
-  if (!dialog.open) return;
-  if (event.key === "ArrowRight") {
-    event.preventDefault();
-    moveGallery(1);
-  }
-  if (event.key === "ArrowLeft") {
-    event.preventDefault();
-    moveGallery(-1);
-  }
-}
-
-function renderDialogImage(project) {
-  const image = document.getElementById("dialogImage");
-  const counter = document.getElementById("galleryCounter");
-  const controls = document.querySelectorAll(".gallery-nav");
-  image.classList.remove("is-loaded");
-  image.src = activeGallery[activeGalleryIndex];
-  image.alt = project.title || "Project image";
-  image.onload = () => image.classList.add("is-loaded");
-  counter.textContent = `${activeGalleryIndex + 1} / ${activeGallery.length}`;
-  controls.forEach((control) => control.classList.toggle("hidden", activeGallery.length < 2));
-  counter.classList.toggle("hidden", activeGallery.length < 2);
+function renderRelatedProjects(activeId) {
+  const related = localizedProjects()
+    .filter((project) => project.published && project.id !== activeId)
+    .slice(0, 6);
+  document.getElementById("relatedKicker").textContent = t("related");
+  document.getElementById("relatedProjects").innerHTML = related
+    .map((project) => `
+      <button class="related-card" type="button" data-related-project="${project.id}">
+        <img src="${project.cover}" alt="${escapeHtml(project.title)}">
+        <span>${escapeHtml(project.category)} · ${escapeHtml(project.year)}</span>
+        <strong>${escapeHtml(project.title)}</strong>
+      </button>
+    `)
+    .join("");
+  document.querySelectorAll("[data-related-project]").forEach((button) => {
+    button.addEventListener("click", () => openProject(button.dataset.relatedProject));
+  });
 }
 
 function setupReveal() {
