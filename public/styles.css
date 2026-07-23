@@ -363,17 +363,18 @@ h3 {
 
 .section-title {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 22px;
-  align-items: end;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: start;
   margin-bottom: 24px;
 }
 
 .filters {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 8px;
+  max-width: 100%;
 }
 
 .filters button,
